@@ -57,3 +57,8 @@ AWS_BUCKET=
 AWS_USE_PATH_STYLE_ENDPOINT=false
 
 VITE_APP_NAME="${APP_NAME}"
+
+# API WEATHER
+
+VISUALCROSSING_API_KEY=your_api_key_here
+VISUALCROSSING_URL="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"

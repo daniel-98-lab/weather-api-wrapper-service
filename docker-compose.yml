@@ -1,4 +1,5 @@
 version: '3.9'
+
 services:
   balancer:
     image: 'jwilder/nginx-proxy'
@@ -8,7 +9,9 @@ services:
     ports:
       - 80:80
       - 443:443
-    restart: 'no'
+    restart: 'unless-stopped'  # Restart in case of failure
+    networks:
+        - app-network
 
   weather-api:
     build:
@@ -22,6 +25,22 @@ services:
       - HTTPS_METHOD=noredirect
       - VIRTUAL_HOST=${APP_DOMAIN}
     user: "${UID:-1000}:${UID:-1000}"
-    restart: 'no'
+    restart: 'unless-stopped'  # Restart in case of failure
     depends_on:
       - balancer
+      - redis
+    networks:
+      - app-network
+
+  redis:
+    image: redis:alpine
+    container_name: weather-redis
+    ports:
+      - "6379:6379"
+    restart: 'unless-stopped'  # Restart in case of failure
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

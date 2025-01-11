@@ -123,4 +123,14 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Config API Visual Crossing
+    |--------------------------------------------------------------------------
+    */
+
+    'visualCrossing' => [
+        'visualcrossing_api_key' => env('VISUALCROSSING_API_KEY', null),
+        'visualcrossing_url' => env('APP_MAINTENANCE_STORE', 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline'),
+    ],
 ];

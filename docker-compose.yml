@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  balancer:
+    image: 'jwilder/nginx-proxy'
+    container_name: nginx-balancer
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - 80:80
+      - 443:443
+    restart: 'no'
+
+  weather-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: weather-api
+    volumes:
+      - ./.:/var/www/html
+    hostname: ${APP_DOMAIN}
+    environment:
+      - HTTPS_METHOD=noredirect
+      - VIRTUAL_HOST=${APP_DOMAIN}
+    user: "${UID:-1000}:${UID:-1000}"
+    restart: 'no'
+    depends_on:
+      - balancer

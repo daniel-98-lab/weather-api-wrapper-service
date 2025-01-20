@@ -14,7 +14,7 @@ class WeatherDataController extends Controller
     public function getWeather(Request $request)
     {
 
-        // Get route and  values
+        // Get route and values
         $location = $request->route('location');
         $dateFrom = $request->route('dateFrom');
         $dateTo = $request->route('dateTo');
@@ -31,7 +31,7 @@ class WeatherDataController extends Controller
             return response()->json(new WeatherResponse($cachedData), 200);
         }
 
-        // API key from .env and Base URL for the API
+        // API key from config and Base URL for the API
         $apiKey = config('app.visualCrossing.visualcrossing_api_key');
         $baseUrl = config('app.visualCrossing.visualcrossing_url');
 
@@ -58,7 +58,6 @@ class WeatherDataController extends Controller
 
                 // Cache response (expires in 1 hour)
                 Cache::put($cacheKey, $response->json(), now()->addHours(1));
-                Log::info("reponse");
 
                 return response()->json(new WeatherResponse($response->json()), 200);
             }

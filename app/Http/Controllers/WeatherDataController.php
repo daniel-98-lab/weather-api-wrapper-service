@@ -28,8 +28,7 @@ class WeatherDataController extends Controller
 
         // If the response exists in the cache, return it directly
         if($cachedData) {
-            Log::info("$cachedData");
-            return response()->json(new WeatherResponse($cachedData->json()), 200);
+            return response()->json(new WeatherResponse($cachedData), 200);
         }
 
         // API key from .env and Base URL for the API

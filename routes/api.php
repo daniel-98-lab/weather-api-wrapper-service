@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('weather/{location}/{dateFrom?}/{dateTo?}', [WeatherDataController::class, 'getWeather']);
+Route::middleware('throttle:api')->get('weather/{location}/{dateFrom?}/{dateTo?}', [WeatherDataController::class, 'getWeather']);
